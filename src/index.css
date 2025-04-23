@@ -13,3 +13,7 @@
 .login-button {
   font-family: "Helvetica", sans-serif;
 }
+
+label {
+  font-size: 12px !;
+}

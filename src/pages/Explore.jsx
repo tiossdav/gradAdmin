@@ -117,7 +117,7 @@ const Explore = () => {
               <div className="flex justify-between">
                 <p className="text-sm inter ">Duration</p>
                 <p className="text-sm inter text-gray-700">
-                  4 Year(s) 5 Month(s){" "}
+                  4 Year(s) 5 Month(s)
                 </p>
               </div>
               <div className="flex justify-between">
@@ -279,7 +279,7 @@ const Explore = () => {
               <div className="flex justify-between">
                 <p className="text-sm inter ">Duration</p>
                 <p className="text-sm inter text-gray-700">
-                  4 Year(s) 5 Month(s){" "}
+                  4 Year(s) 5 Month(s)
                 </p>
               </div>
               <div className="flex justify-between">
@@ -360,7 +360,7 @@ const Explore = () => {
               <div className="flex justify-between">
                 <p className="text-sm inter ">Duration</p>
                 <p className="text-sm inter text-gray-700">
-                  4 Year(s) 5 Month(s){" "}
+                  4 Year(s) 5 Month(s)
                 </p>
               </div>
               <div className="flex justify-between">
@@ -441,7 +441,7 @@ const Explore = () => {
               <div className="flex justify-between">
                 <p className="text-sm inter ">Duration</p>
                 <p className="text-sm inter text-gray-700">
-                  4 Year(s) 5 Month(s){" "}
+                  4 Year(s) 5 Month(s)
                 </p>
               </div>
               <div className="flex justify-between">
@@ -522,7 +522,7 @@ const Explore = () => {
               <div className="flex justify-between">
                 <p className="text-sm inter ">Duration</p>
                 <p className="text-sm inter text-gray-700">
-                  4 Year(s) 5 Month(s){" "}
+                  4 Year(s) 5 Month(s)
                 </p>
               </div>
               <div className="flex justify-between">

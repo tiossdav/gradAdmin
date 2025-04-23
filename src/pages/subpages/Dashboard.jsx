@@ -149,7 +149,7 @@ const Dashboard = () => {
                 </td>
                 <td className="p-3 text-sm whitespace-nowrap text-gray-900">
                   <div className="flex items-center justify-between">
-                    <span className="text-orange-600 bg-orange-100 py-0.5 px-1 rounded-lg">
+                    <span className="text-orange-600 bg-orange-100 py-0.5 px-2 rounded-xl">
                       Incomplete Documents
                     </span>
                     <button

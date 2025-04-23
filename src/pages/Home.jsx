@@ -4,9 +4,24 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 
-import { Dashboard, Explore, Students } from "../pages";
+import {
+  Dashboard,
+  Explore,
+  Students,
+  Schools,
+  CreateSchool,
+  SchoolDetails,
+  CreateCourse,
+  Access,
+  Requirements,
+  Messages,
+  Settings,
+  Agents,
+  AgentDetails,
+} from "../pages";
 import { links } from "../data/dummy";
 import logo from "../assets/logo/logo.jpg";
+import StudentDetails from "./subpages/StudentDetails";
 
 const activeLink =
   "flex items-center text-base inter gap-3 text-purple-900 h-[38px]";
@@ -73,6 +88,20 @@ const Home = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/students" element={<Students />} />
+            <Route path="/students/:id" element={<StudentDetails />} />
+            <Route path="/schools" element={<Schools />} />
+            <Route path="/schools/create" element={<CreateSchool />} />
+            <Route path="/schools/:id" element={<SchoolDetails />} />
+            <Route
+              path="/schools/:id/create_course"
+              element={<CreateCourse />}
+            />
+            <Route path="/requirement" element={<Requirements />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/agents" element={<Agents />} />
+            <Route path="/agents/:id" element={<AgentDetails />} />
+            <Route path="/access" element={<Access />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </div>
       </div>
