@@ -20,3 +20,8 @@ export { default as AgentDetails } from "./subpages/AgentDetails";
 export { default as AgentStudents } from "./subpages/AgentStudents";
 export { default as AgentCommission } from "./subpages/AgentCommission";
 export { default as AgentWithdrawalHistory } from "./subpages/AgentWithdrawalHistory";
+export { default as StudentCourse } from "./subpages/StudentCourse";
+export { default as CourseDetails } from "./subpages/CourseDetails";
+export { default as RequiredDocs } from "./subpages/RequiredDocs";
+export { default as SentDocs } from "./subpages/SentDocs";
+export { default as AppFeeds } from "./subpages/AppFeeds";

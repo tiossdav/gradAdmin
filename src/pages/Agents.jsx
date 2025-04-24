@@ -157,7 +157,7 @@ const Agents = () => {
           </div>
           <button
             type="button"
-            className="flex items-center gap-2 bg-purple-900 py-[8px] px-[16px] rounded-lg text-white"
+            className="flex items-center gap-2 bg-purple-900 py-[8px] px-[16px] rounded-lg text-sm text-white"
           >
             <FaPlus className="" />
             Create Agent

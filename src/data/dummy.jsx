@@ -159,77 +159,37 @@ export const applicantionData = [
 
 export const links = [
   {
-    title: "Dashboard",
-    links: [
-      {
-        name: "dashboard",
-        icon: <MdDashboard size={20} />,
-      },
-    ],
+    name: "dashboard",
+    icon: <MdDashboard size={20} />,
   },
 
   {
-    title: "Students",
-    links: [
-      {
-        name: "students",
-        icon: <RiAccountBoxFill size={20} />,
-      },
-    ],
+    name: "students",
+    icon: <RiAccountBoxFill size={20} />,
   },
   {
-    title: "Schools",
-    links: [
-      {
-        name: "schools",
-        icon: <RiAwardFill size={20} />,
-      },
-    ],
+    name: "schools",
+    icon: <RiAwardFill size={20} />,
   },
   {
-    title: "Requirement",
-    links: [
-      {
-        name: "requirement",
-        icon: <BiSolidCreditCardFront size={20} />,
-      },
-    ],
+    name: "requirement",
+    icon: <BiSolidCreditCardFront size={20} />,
   },
   {
-    title: "Messages",
-    links: [
-      {
-        name: "messages",
-        icon: <BiSolidCreditCardFront size={20} />,
-      },
-    ],
+    name: "messages",
+    icon: <BiSolidCreditCardFront size={20} />,
   },
   {
-    title: "Agents",
-    links: [
-      {
-        name: "agents",
-        icon: <FaHandshake size={20} />,
-      },
-    ],
+    name: "agents",
+    icon: <FaHandshake size={20} />,
   },
   {
-    title: "Access Control",
-    links: [
-      {
-        name: "access",
-        icon: <RiFolderKeyholeFill size={20} />,
-      },
-    ],
+    name: "access",
+    icon: <RiFolderKeyholeFill size={20} />,
   },
   {
-    title: "Settings",
-    links: [
-      {
-        name: "settings",
-        icon: <PiCurrencyDollarFill size={20} />,
-      },
-    ],
+    name: "settings",
+    icon: <PiCurrencyDollarFill size={20} />,
   },
 ];
 

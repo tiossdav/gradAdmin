@@ -18,20 +18,22 @@ import {
   Settings,
   Agents,
   AgentDetails,
+  StudentCourse,
+  CourseDetails,
 } from "../pages";
 import { links } from "../data/dummy";
 import logo from "../assets/logo/logo.jpg";
 import StudentDetails from "./subpages/StudentDetails";
 
 const activeLink =
-  "flex items-center text-base inter gap-3 text-purple-900 h-[38px]";
-const normalLink = "flex items-center text-base inter gap-3 h-[38px] ";
+  "flex items-center text-[14px] inter p-2 pl-5 gap-3 text-purple-900 bg-purple-100 w-full";
+const normalLink = "flex items-center text-[14px] inter p-2 pl-5 gap-3 w-full";
 
 const Home = () => {
   return (
     <div className="bg-gray-50 h-screen">
-      <div className="grid grid-cols-[12rem_1fr] p-4 gap-4 h-screen overflow-hidden">
-        <div className="bg-white flex flex-col justify-between">
+      <div className="grid grid-cols-[11rem_1fr] p-4 gap-4 h-screen overflow-hidden">
+        <div className="bg-white flex flex-col gap-5">
           <div className="flex justify-center items-center ">
             <Link
               to="/"
@@ -41,43 +43,31 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="flex flex-col items-center mt-4 gap-4 flex-1">
-            <div className="flex flex-col w-full px-4 pl-6 gap-2">
-              <div className="flex flex-col w-full">
-                <div className="flex items-center text-sm inter gap-2">
-                  <CiSearch
-                    strokeWidth={1}
-                    className="text-purple-900 h-[20px] w-[20px]"
-                  />
-                  <NavLink
-                    to="/explore"
-                    className="inter text-purple-900 leading-8"
-                  >
-                    Explore Courses
-                  </NavLink>
-                </div>
-              </div>
+          <div className="flex flex-col items-center ">
+            <div className="flex items-center text-sm inter p-3 gap-2">
+              <CiSearch
+                strokeWidth={1}
+                className="text-purple-900 h-[20px] w-[20px]"
+              />
+              <NavLink to="/explore" className="inter text-purple-900">
+                Explore Courses
+              </NavLink>
             </div>
-
             {/* Navigation */}
-            <div className="flex flex-col w-full px-4 pl-6  gap-2">
-              {links.map((item) => (
-                <div className="flex flex-col w-full" key={item.title}>
-                  {item.links.map((link) => (
-                    <NavLink
-                      to={`/${link.name}`}
-                      key={link.name}
-                      className={({ isActive }) =>
-                        isActive ? activeLink : normalLink
-                      }
-                    >
-                      {link.icon}
-                      <span className="capitalize text-black-300">
-                        {link.name}
-                      </span>
-                    </NavLink>
-                  ))}
-                </div>
+            <div className="flex flex-col items-center w-full">
+              {links.map((link) => (
+                <NavLink
+                  to={`/${link.name}`}
+                  key={link.name}
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                >
+                  {link.icon}
+                  <span className="capitalize test-sm inter text-black">
+                    {link.name}
+                  </span>
+                </NavLink>
               ))}
             </div>
           </div>
@@ -96,12 +86,14 @@ const Home = () => {
               path="/schools/:id/create_course"
               element={<CreateCourse />}
             />
+            <Route path="/schools/:id/course" element={<CourseDetails />} />
             <Route path="/requirement" element={<Requirements />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/agents" element={<Agents />} />
             <Route path="/agents/:id" element={<AgentDetails />} />
             <Route path="/access" element={<Access />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/course" element={<StudentCourse />} />
           </Routes>
         </div>
       </div>

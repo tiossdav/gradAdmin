@@ -4,6 +4,8 @@ import { IoIosCheckmark } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { CgNotes } from "react-icons/cg";
+
 import { FaPlus } from "react-icons/fa";
 
 import plane_icon from "../../assets/icon/plane_icon.png";
@@ -29,7 +31,7 @@ const modalStyles = {
   },
 };
 
-const SchoolDetails = () => {
+const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [selectCourse, setSelectCourse] = useState(false);
@@ -50,7 +52,7 @@ const SchoolDetails = () => {
   };
   return (
     <>
-      <div className=" flex justify-between items-center inter bg-white p-4 shadow rounded-md">
+      <div className=" flex justify-between items-center inter bg-white py-2 px-4 shadow rounded-md">
         <div>
           <h5 className="text-black text-base"> Admin</h5>
           <h5 className="text-black text-base">Samuel Balogun</h5>
@@ -68,100 +70,165 @@ const SchoolDetails = () => {
       <div className="flex items-center bg-gray-50 mt-4 gap-3">
         <div
           onClick={() => {
-            navigate("/schools");
+            navigate("/schools/:id");
           }}
-          className="h-[63px] flex items-center justify-center w-[44px] rounded-md bg-white"
+          className="h-[56px] flex items-center justify-center w-[44px] rounded-md bg-white"
         >
           <IoIosArrowBack />
         </div>
-        <h5 className="h-[63px] flex items-center py-[20px] px-[25px] text-black rounded-md bg-white text-xl font-semibold inter w-full">
-          School Details
+        <h5 className="h-[56px] flex items-center py-[20px] px-[25px] text-black rounded-md bg-white text-xl font-semibold inter w-full">
+          Course Details
         </h5>
       </div>
 
-      {/* Search Button */}
-      <div className="mt-4 gap-2 bg-white rounded-md shadow p-5 flex flex-col items-center justify-between  w-full">
-        <div className="w-full flex justify-between py-4">
-          <div>
-            <img
-              src={fanshawe_logo}
-              className="h-[40px] w-[35px] inline-block mr-4"
-              alt="fanshawe_logo"
-            />
-            <div className="inline-block align-middle">
-              <p className="text-sm">Fanshawe College</p>
-              <p className="text-xs text-gray-600">Ontario, Canada</p>
-            </div>
-          </div>
-          <div>
-            <button
-              type="button"
-              onClick={createCourse}
-              className="flex items-center gap-3 text-sm text-white px-7 py-[10px] bg-green-400 rounded-md"
-            >
-              <FaPlus className="text-white text-base" />
-              Create Course
-            </button>
-          </div>
-        </div>
-        <div className="flex items-center gap-3 w-full">
-          <div className="relative w-full flex items-center">
-            <input
-              type="text"
-              name="search"
-              id="search"
-              className="text-sm  border-1 border-gray-200 w-full p-[7.5px] pl-[38px] py-[10px] rounded-lg outline-none focus:border-purple-400  "
-              placeholder="School, course"
-            />
-            <CiSearch
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-              size={21}
-              strokeWidth={1}
-            />
-          </div>
+      <div className="mt-3 inter bg-white rounded-md px-4 py-2">
+        <h2 className="text-xl font-semibold">
+          Bachelor of Digital Marketing Communication
+        </h2>
+        <p className="text-gray-600 text-sm mt-1">Bachelor; Co-op; Honours</p>
+      </div>
+
+      <div className="rounded-md inter bg-white px-4 py-2 mt-3">
+        <div className="flex justify-between items-center">
+          <h5 className="text-base font-semibold"> Program Information</h5>
           <button
             type="button"
-            className="text-sm text-white px-12 py-[10px] bg-purple-900 rounded-md"
+            className="flex items-center gap-3 text-sm text-white px-7 py-[10px] mt-4 bg-purple-900 rounded-md"
           >
-            Search
+            <FaPlus className="text-white text-base" />
+            Select Course
           </button>
         </div>
-        <div className="flex items-center gap-3 mt-1 w-full">
-          <div className="relative w-full sm:w-auto">
-            <select
-              name="location"
-              className="appearance-none border border-gray-300 py-2 px-3 outline-none w-full sm:w-[150px] rounded-lg text-gray-600 text-sm"
-              id="location"
-            >
-              <option value="Location">Location</option>
-            </select>
-            <MdKeyboardArrowDown className="absolute top-1/2 -translate-y-1/2 right-3" />
+        <div className="inline-block align-middle mt-1 p-2">
+          <img
+            src={fanshawe_logo}
+            className="h-[40px] w-[35px] inline-block mr-4"
+            alt="fanshawe_logo"
+          />
+          <div className="inline-block align-middle">
+            <p className="text-sm">Fanshawe College</p>
+            <p className="text-xs text-gray-600">Ontario, Canada</p>
           </div>
-          <div className="relative w-full sm:w-auto">
-            <select
-              name="tuition_fee"
-              className="appearance-none border border-gray-300 py-2 px-3 outline-none w-full sm:w-[150px] rounded-lg text-gray-600 text-sm"
-              id="tuition_fee"
-            >
-              <option value="Tuition Fee">Tuition Fee</option>
-            </select>
-            <MdKeyboardArrowDown className="absolute top-1/2 -translate-y-1/2 right-3" />
-          </div>
-          <div className="relative w-full sm:w-auto">
-            <select
-              name="program"
-              className="appearance-none border border-gray-300 py-2 px-3 outline-none w-full sm:w-[150px] rounded-lg text-gray-600 text-sm"
-              id="program"
-            >
-              <option value="Program Level">Program Level</option>
-            </select>
-            <MdKeyboardArrowDown className="absolute top-1/2 -translate-y-1/2 right-3" />
+        </div>
+        <div className="flex flex-col mt-3">
+          <div className="w-full flex flex-col gap-4">
+            <div className="flex gap-18">
+              <p className="text-sm inter w-[143px] ">Location</p>
+              <p className="text-sm inter text-gray-700">Ontario, CAN</p>
+            </div>
+            <div className="flex gap-18">
+              <p className="text-sm inter w-[143px] ">Faculty:</p>
+              <p className="text-sm inter text-gray-700">Social Sciences</p>
+            </div>
+            <div className="flex gap-18">
+              <p className="text-sm inter w-[143px] ">Length:</p>
+              <p className="text-sm inter text-gray-700">4 Year(s) </p>
+            </div>
+            <div className="flex gap-18">
+              <p className="text-sm inter w-[143px] ">Program Type</p>
+              <p className="text-sm inter text-gray-700">
+                Bachelor; Co-op; Honours
+              </p>
+            </div>
+            <div className="flex gap-18">
+              <p className="text-sm inter w-[143px] ">Field of Study</p>
+              <div>
+                <p className="text-sm inter text-gray-700">
+                  Digital Communication and Media/Multimedia
+                </p>
+                <p className="text-sm inter text-gray-700">
+                  Marketing/Marketing Management, General
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-18">
+              <p className="text-sm inter w-[143px]">Description</p>
+
+              <div className="flex flex-col gap-4">
+                <p className="text-sm inter text-justify text-gray-700 max-w-3xl">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Commodi, pariatur placeat cumque provide Lorem ipsum dolor sit
+                  amet consectetur adipisicing elit. Placeat assumenda corporis
+                  dolorum doloremque, ex ab quos voluptatem! Veritatis nobis
+                  nihil nostrum temporibus. Modi blanditiis asperiores
+                </p>
+                <p className="text-sm inter text-justify text-gray-700 max-w-3xl">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Commodi, pariatur placeat cumque provide Lorem ipsum dolor sit
+                  amet consectetur adipisicing elit. Placeat assumenda corporis
+                  dolorum doloremque, ex ab quos voluptatem! Veritatis nobis
+                  nihil nostrum temporibus. Modi blanditiis asperiores Lorem
+                  ipsum dolor sit amet consectetur adipisicing elit. Expedita
+                  similique autem beatae possimus sapiente, eius dolorem sit
+                  odio veritatis praesentium necessitatibus explicabo aut fuga
+                  tempora quibusdam suscipit aliquam maiores placeat nihil amet.
+                </p>
+              </div>
+            </div>
+            <div className="flex gap-18">
+              <p className="text-sm inter w-[143px] ">Application Fee:</p>
+              <div>
+                <p className="text-sm inter text-gray-700">N150,000</p>
+              </div>
+            </div>
+            <div className="flex gap-18">
+              <p className="text-sm inter w-[143px] ">Tuition Fee/Year:</p>
+              <div>
+                <p className="text-sm inter text-gray-700">N2,350,000</p>
+              </div>
+            </div>
+
+            <div>
+              <h6 className="text-xl inter font-semibold">
+                Admission Requirements
+              </h6>
+
+              <div className="flex gap-3 mt-3">
+                <div
+                  style={{ backgroundColor: "#F4EBFF", color: "#582B8D" }}
+                  className="flex items-center gap-2 py-2 px-5 rounded-3xl"
+                >
+                  <CgNotes />{" "}
+                  <p className="text-sm text-black">O. Level Certificate</p>
+                </div>
+                <div
+                  style={{ backgroundColor: "#F4EBFF", color: "#582B8D" }}
+                  className="flex items-center gap-2 py-2 px-5 rounded-3xl"
+                >
+                  <CgNotes />{" "}
+                  <p className="text-sm text-black">International Passport</p>
+                </div>
+                <div
+                  style={{ backgroundColor: "#F4EBFF", color: "#582B8D" }}
+                  className="flex items-center gap-2 py-2 px-5 rounded-3xl"
+                >
+                  <CgNotes />{" "}
+                  <p className="text-sm text-black">High School Certificate</p>
+                </div>
+                <div
+                  style={{ backgroundColor: "#F4EBFF", color: "#582B8D" }}
+                  className="flex items-center gap-2 py-2 px-5 rounded-3xl"
+                >
+                  <CgNotes /> <p className="text-sm text-black">Transcript</p>
+                </div>
+              </div>
+              <div className="mt-4">
+                <p className="text-sm inter text-gray-700 ">
+                  Applicants with international transcripts must provide proof
+                  of the subject-specific requirements noted above and may be
+                  required to provide proof of language proficiency. Domestic
+                  applicants with international transcripts must be evaluated
+                  through the International Credential Assessment Service of
+                  Canada (ICAS) or World Education Services (WES).
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Buttons */}
-      <div className="mt-4 grid grid-cols-[repeat(3,_minmax(309px,_1fr))] p-4 bg-white rounded-lg  gap-4 ">
+      {/* <div className="mt-4 grid grid-cols-[repeat(3,_minmax(309px,_1fr))] p-4 bg-white rounded-lg  gap-4 ">
         <div
           onClick={handleCourse}
           className="h-[428px] bg-white p-3 border-2 border-gray-100 rounded-lg"
@@ -243,9 +310,9 @@ const SchoolDetails = () => {
             Select Course
           </button>
         </div>
-      </div>
+      </div> */}
 
-      {selectCourse && (
+      {/* {selectCourse && (
         <div style={modalStyles.overlay}>
           <div className="w-[70%] inter h-[90%] " style={modalStyles.modal}>
             <p className="text-xl  font-semibold">
@@ -397,9 +464,9 @@ const SchoolDetails = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };
 
-export default SchoolDetails;
+export default CourseDetails;
