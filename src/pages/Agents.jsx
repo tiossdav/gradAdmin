@@ -18,7 +18,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/themes/material_blue.css"; // or any theme you like
 
-import { FaPlus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 
 import plane_icon from "../assets/icon/plane_icon.png";
@@ -140,7 +140,7 @@ const Agents = () => {
           </div>
         </div>
 
-        <div className="flex justify-between mt-4 items-center">
+        <div className="flex justify-between mt-8 items-center">
           <div className="relative ">
             <input
               type="text"
@@ -157,9 +157,10 @@ const Agents = () => {
           </div>
           <button
             type="button"
-            className="flex items-center gap-2 bg-purple-900 py-[8px] px-[16px] rounded-lg text-sm text-white"
+            style={{ backgroundColor: "#582B8D" }}
+            className="flex items-center gap-2 py-[8px] px-[16px] rounded-lg text-sm text-white"
           >
-            <FaPlus className="" />
+            <FaPlus className="text-sm" />
             Create Agent
           </button>
         </div>

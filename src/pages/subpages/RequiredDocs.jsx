@@ -1,6 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { IoIosCheckmark } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
+import { LuSettings2 } from "react-icons/lu";
+import { RiUploadCloudLine } from "react-icons/ri";
+import { GiCancel } from "react-icons/gi";
+import { LuMessageCircle } from "react-icons/lu";
+
+import { CiSearch } from "react-icons/ci";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+
+import info_icon from "../../assets/icon/info_icon.png";
+import plane_icon from "../../assets/icon/plane_icon.png";
+import notification_icon from "../../assets/icon/notification_icon.png";
+import fanshawe_logo from "../../assets/logo/fanshawe_logo.png";
+import rgu_logo from "../../assets/logo/rgu_logo.png";
+import SentDocs from "./SentDocs";
+import AppFeeds from "./AppFeeds";
+
+const modalStyles = {
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0,0.7)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  modal: {
+    background: "#fff",
+    borderRadius: "12px",
+  },
+};
 
 const RequiredDocs = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="w-full mt-3 " style={{ backgroundColor: "#FCFCFD" }}>
@@ -18,7 +59,7 @@ const RequiredDocs = () => {
                       Approved
                     </span>
                   </div>
-                  <p className="text-sm">
+                  <p className="text-sm font-normal">
                     Valid International passport from your country
                   </p>
                 </div>
@@ -40,7 +81,7 @@ const RequiredDocs = () => {
               <td className="p-3 text-sm text-gray-900 text-left">
                 <div className="flex flex-col items-start">
                   <p className="text-base">International Passport 1</p>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-xs text-gray-700">
                     I just reviewed this passport
                   </p>
                 </div>
@@ -78,7 +119,7 @@ const RequiredDocs = () => {
               <td className="p-3 text-sm text-gray-900 text-left">
                 <div className="flex flex-col items-start">
                   <p className="text-base">Affidavit</p>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-xs text-gray-700">
                     I just reviewed this passport
                   </p>
                 </div>
@@ -128,7 +169,7 @@ const RequiredDocs = () => {
                       Incomplete Document
                     </span>
                   </div>
-                  <p className="text-sm">
+                  <p className="text-sm font-normal">
                     Valid International passport from your country
                   </p>
                 </div>
@@ -150,7 +191,7 @@ const RequiredDocs = () => {
               <td className="p-3 text-sm text-gray-900 text-left">
                 <div className="flex flex-col items-start">
                   <p className="text-base">International Passport 1</p>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-xs text-gray-700">
                     I just reviewed this passport
                   </p>
                 </div>
@@ -176,7 +217,7 @@ const RequiredDocs = () => {
               <td className="p-3 text-sm text-gray-900 text-left">
                 <div className="flex flex-col items-start">
                   <p className="text-base">Affidavit</p>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-xs text-gray-700">
                     I just reviewed this passport
                   </p>
                 </div>
@@ -214,7 +255,7 @@ const RequiredDocs = () => {
               <td className="p-3 text-sm text-gray-900 text-left">
                 <div className="flex flex-col items-start">
                   <p className="text-base">Affidavit</p>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-xs text-gray-700">
                     I just reviewed this passport
                   </p>
                 </div>

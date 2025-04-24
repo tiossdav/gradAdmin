@@ -3,12 +3,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IoIosCheckmark } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import { LuSettings2 } from "react-icons/lu";
+import { RiUploadCloudLine } from "react-icons/ri";
+import { GiCancel } from "react-icons/gi";
+import { LuMessageCircle } from "react-icons/lu";
 
 import { CiSearch } from "react-icons/ci";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { FaPlus } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 
+import info_icon from "../../assets/icon/info_icon.png";
 import plane_icon from "../../assets/icon/plane_icon.png";
 import notification_icon from "../../assets/icon/notification_icon.png";
 import fanshawe_logo from "../../assets/logo/fanshawe_logo.png";
@@ -34,7 +38,6 @@ const modalStyles = {
   },
   modal: {
     background: "#fff",
-    padding: "20px",
     borderRadius: "12px",
   },
 };
@@ -43,9 +46,15 @@ const StudentCourse = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [addStudent, setAddStudent] = useState(false);
+
+  const [sendMessage, setSendMessage] = useState(false);
+
+  const [openUpdate, setOpenUpdate] = useState(false);
   const [selectedTab, setSelectedTab] = useState("required_doc"); // Default tab
 
+  const openMessage = () => setSendMessage(true);
   const openAddStudent = () => setAddStudent(true);
+  const updateStatus = () => setOpenUpdate(true);
 
   const handleTabClick = (tab) => {
     setSelectedTab(tab); // Highlight the selected tab
@@ -103,14 +112,41 @@ const StudentCourse = () => {
             </p>
 
             <button
-              className="bg-purple-900 text-white flex items-center gap-2 py-[8px] px-[16px] rounded-lg"
+              className="bg-purple-900 text-sm text-white flex items-center gap-2 py-[8px] px-[16px] rounded-lg"
               type="button"
+              onClick={updateStatus}
             >
               <LuSettings2 />
               Update Status
             </button>
           </div>
         </div>
+        {selectedTab === "app_feeds" && (
+          <div className="mt-3">
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                className="bg-purple-900 px-4 py-2 rounded-lg text-white"
+              >
+                <RiUploadCloudLine />
+              </button>
+              <p style={{ color: "#147129" }} className="underline  text-sm">
+                Offer Letter.pdf
+                <GiCancel
+                  style={{ color: "#852221" }}
+                  className="inline-block ml-2 text-base text-red"
+                />
+              </p>
+              <p style={{ color: "#147129" }} className="underline  text-sm">
+                Offer Letter.pdf
+                <GiCancel
+                  style={{ color: "#852221" }}
+                  className="inline-block ml-2 text-base text-red"
+                />
+              </p>
+            </div>
+          </div>
+        )}
         <div className="flex items-center gap-20 mt-3">
           <div className="box w-90">
             <div className="flex items-center justify-between">
@@ -147,37 +183,62 @@ const StudentCourse = () => {
 
       {/* Tab Button */}
       <div className="bg-white mt-4 p-3 px-5">
-        <div className="gap-6 flex items-center w-full text-gray-600 bg-white rounded-lg">
-          <p
-            className={`text-sm h-full flex items-center justify-center cursor-pointer py-4 ${
-              selectedTab === "required_doc"
-                ? "border-b-2 border-purple-700 text-purple-900"
-                : ""
-            }`}
-            onClick={() => handleTabClick("required_doc")}
-          >
-            Required Document
-          </p>
-          <p
-            className={`text-sm h-full flex items-center justify-center cursor-pointer py-4 ${
-              selectedTab === "sent_doc"
-                ? "border-b-2 border-purple-700 text-purple-900"
-                : ""
-            }`}
-            onClick={() => handleTabClick("sent_doc")}
-          >
-            Sent Documents
-          </p>
-          <p
-            className={`text-sm h-full flex items-center justify-center cursor-pointer py-4 ${
-              selectedTab === "app_feeds"
-                ? "border-b-2 border-purple-700 text-purple-900"
-                : ""
-            }`}
-            onClick={() => handleTabClick("app_feeds")}
-          >
-            Application Feedback
-          </p>
+        <div className="flex items-center justify-between">
+          <div className="gap-6 flex items-center text-gray-600 bg-white rounded-lg">
+            <p
+              className={`text-sm h-full flex items-center justify-center cursor-pointer py-4 ${
+                selectedTab === "required_doc"
+                  ? "border-b-2 border-purple-700 text-purple-900"
+                  : ""
+              }`}
+              onClick={() => handleTabClick("required_doc")}
+            >
+              Required Document
+            </p>
+            <p
+              className={`text-sm h-full flex items-center justify-center cursor-pointer py-4 ${
+                selectedTab === "sent_doc"
+                  ? "border-b-2 border-purple-700 text-purple-900"
+                  : ""
+              }`}
+              onClick={() => handleTabClick("sent_doc")}
+            >
+              Sent Documents
+            </p>
+            <p
+              className={`text-sm h-full flex items-center justify-center cursor-pointer py-4 ${
+                selectedTab === "app_feeds"
+                  ? "border-b-2 border-purple-700 text-purple-900"
+                  : ""
+              }`}
+              onClick={() => handleTabClick("app_feeds")}
+            >
+              Application Feedback
+            </p>
+          </div>
+          {selectedTab === "app_feeds" && (
+            <div>
+              <button
+                type="button"
+                onClick={openMessage}
+                className="px-4 py-2 bg-purple-900 flex items-center text-sm gap-2 rounded-lg text-white"
+              >
+                <LuMessageCircle className="inline-block align-middle text-base" />
+                Send Message
+              </button>
+            </div>
+          )}
+          {selectedTab === "sent_doc" && (
+            <div>
+              <button
+                type="button"
+                className="px-4 py-2 bg-purple-900 flex items-center text-sm gap-2 rounded-lg text-white"
+              >
+                <FaPlus className="inline-block align-middle text-base" />
+                Send Document
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="w-full">
@@ -186,6 +247,99 @@ const StudentCourse = () => {
           {selectedTab === "app_feeds" && <AppFeeds />}
         </div>
       </div>
+      {openUpdate && (
+        <div style={modalStyles.overlay}>
+          <div
+            style={modalStyles.modal}
+            className="w-100 inter h-auto relative rounded-2xl"
+          >
+            <div className="flex px-4 py-3 items-center gap-3">
+              <img src={info_icon} alt="icon" className="place-self-start" />
+              <div className="">
+                <p className="text-sm font-semibold">
+                  Update Application Status
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Update this status to keep the student informed and the
+                  application progress.
+                </p>
+
+                <div className="relative mt-3">
+                  <select
+                    name=""
+                    className="appearance-none border w-full border-gray-300 py-2 px-3 outline-none rounded-lg text-gray-600 text-sm"
+                    id=""
+                  >
+                    <option value="">Incomplete Documents</option>
+                    <option value="">Incomplete Processing</option>
+                    <option value="">Incomplete Application Granted</option>
+                  </select>
+                  <MdKeyboardArrowDown className="absolute top-1/2 -translate-y-1/2 right-3" />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 p-[12px] justify-end border-t-2 border-gray-200 w-full flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setOpenUpdate(false)}
+                className="text-sm text-gray-500 py-2 px-4 border border-gray-200 rounded-lg"
+              >
+                Close
+              </button>
+              <button
+                className="bg-purple-900 py-2 px-4 rounded-lg text-white text-sm"
+                type="submit"
+                onClick={() => setOpenUpdate(false)}
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {sendMessage && (
+        <div style={modalStyles.overlay}>
+          <div
+            style={modalStyles.modal}
+            className="w-138 inter p-[20px] h-auto relative rounded-2xl"
+          >
+            <div className="w-full flex  items-center gap-3">
+              <div className="w-full">
+                <p className="text-xl font-semibold">Send Message</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  Send feedback message to student about this application
+                </p>
+                <div className=" w-full mt-4">
+                  <label htmlFor="">Message</label>
+                  <textarea
+                    name=""
+                    className="mt-0.5 block w-full h-[118px] px-[12px] py-[8px] resize-none outline-none border border-gray-200 text-sm rounded-lg"
+                    placeholder=""
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 p-[12px] justify-end border-t-2 border-gray-200 w-full flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setSendMessage(false)}
+                className="text-sm text-gray-500 py-2 px-4 border border-gray-200 rounded-lg"
+              >
+                Close
+              </button>
+              <button
+                className="bg-purple-900 py-2 px-4 rounded-lg text-white text-sm"
+                type="submit"
+                onClick={() => setSendMessage(false)}
+              >
+                Send Message
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

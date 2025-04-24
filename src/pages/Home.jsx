@@ -32,7 +32,7 @@ const normalLink = "flex items-center text-[14px] inter p-2 pl-5 gap-3 w-full";
 const Home = () => {
   return (
     <div className="bg-gray-50 h-screen">
-      <div className="grid grid-cols-[11rem_1fr] p-4 gap-4 h-screen overflow-hidden">
+      <div className="grid grid-cols-[11rem_1fr] p-2 gap-2 h-screen overflow-hidden">
         <div className="bg-white flex flex-col gap-5">
           <div className="flex justify-center items-center ">
             <Link
