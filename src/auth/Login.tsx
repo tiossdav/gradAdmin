@@ -1,5 +1,3 @@
-import React from "react";
-
 import grad_icon from "../assets/icon/grad_icon.png";
 
 const Login = () => {

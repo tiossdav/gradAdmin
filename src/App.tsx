@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { Home } from "./pages";
 import Login from "./auth/Login";
-import Home from "./pages/Home";
 
 const App = () => {
   return (

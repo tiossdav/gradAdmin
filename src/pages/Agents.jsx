@@ -1,27 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { FiEdit2 } from "react-icons/fi";
-import { LuTrash2 } from "react-icons/lu";
-import { IoIosCheckmark } from "react-icons/io";
-import redinfo from "../assets/icon/redinfo.jpg";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
-
-import { AiFillExclamationCircle } from "react-icons/ai";
-import { MdKeyboardArrowDown } from "react-icons/md";
-
-import flatpickr from "flatpickr";
-import "flatpickr/dist/themes/material_blue.css"; // or any theme you like
+import { useNavigate, useParams } from "react-router-dom";
 
 import { FaPlus } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 
-import plane_icon from "../assets/icon/plane_icon.png";
 import notification_icon from "../assets/icon/notification_icon.png";
 import student_icon from "../assets/icon/student_icon.png";
 // Simple inline styles for the modal
