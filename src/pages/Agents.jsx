@@ -141,7 +141,7 @@ const Agents = () => {
           <button
             type="button"
             style={{ backgroundColor: "#582B8D" }}
-            className="flex items-center gap-2 py-[8px] px-[16px] rounded-lg text-sm text-white"
+            className="active:scale-95 transition transform duration-200 ease-in-out flex items-center gap-2 py-[8px] px-[16px] rounded-lg text-sm text-white"
           >
             <FaPlus className="text-sm" />
             Create Agent

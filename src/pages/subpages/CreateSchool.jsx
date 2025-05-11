@@ -9,6 +9,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import plane_icon from "../../assets/icon/plane_icon.png";
 
 import notification_icon from "../../assets/icon/notification_icon.png";
+import { createSchool } from "../../api";
 
 const modalStyles = {
   overlay: {
@@ -29,11 +30,51 @@ const modalStyles = {
   },
 };
 
+const countryStateData = {
+  Nigeria: ["Lagos", "Abuja", "Kano", "Oyo"],
+  Canada: ["Ontario", "Quebec", "British Columbia"],
+  USA: ["California", "Texas", "New York"],
+};
+
 const CreateSchool = () => {
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const successButton = () => setShowSuccess(true);
+  const [schoolName, setSchoolName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [logo, setLogo] = useState(null);
+
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [availableStates, setAvailableStates] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+
+  const handleCountryChange = (e) => {
+    const country = e.target.value;
+    setSelectedCountry(country);
+    setAvailableStates(countryStateData[country] || []);
+    setSelectedState(""); // Reset state when country changes
+  };
+
+  const successButton = async (e) => {
+    e.preventDefault();
+    const data = {
+      school_name: schoolName,
+      country: selectedCountry,
+      state: selectedState,
+      website,
+      logo: "",
+    };
+
+    try {
+      const response = await createSchool(data);
+      setShowSuccess(true);
+    } catch (err) {
+      if (err.response && err.response.status === 406) {
+        alert("A School with this data already exists.");
+      }
+      console.error("Submission failed", err);
+    }
+  };
 
   return (
     <div className="inter">
@@ -76,6 +117,8 @@ const CreateSchool = () => {
               <input
                 type="text"
                 name="name"
+                value={schoolName}
+                onChange={(e) => setSchoolName(e.target.value)}
                 id="name"
                 placeholder="Enter school name here"
                 className="mt-0.5 w-full text-sm block px-[12px] py-[8px] border border-gray-200 rounded-lg"
@@ -90,12 +133,19 @@ const CreateSchool = () => {
               <div className="relative w-full">
                 <select
                   name="country"
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
                   className="appearance-none border border-gray-300 outline-none w-full rounded-lg text-gray-600 text-sm mt-0.5 block px-[12px] py-[8px] pr-10"
                   id="country"
                 >
                   <option value="Select">Select</option>
+                  {Object.keys(countryStateData).map((country) => (
+                    <option key={country} value={country}>
+                      {country}
+                    </option>
+                  ))}
                 </select>
-                <MdKeyboardArrowDown className="absolute top-1/2 right-3 transform -translate-y-1/2 " />
+                <MdKeyboardArrowDown className="absolute top-1/2 right-3 transform -translate-y-1/2 pointer-events-none" />
               </div>
             </div>
             <div className=" w-full">
@@ -107,10 +157,17 @@ const CreateSchool = () => {
                   name="state"
                   className="appearance-none border border-gray-300 outline-none w-full rounded-lg text-gray-600 text-sm mt-0.5 block px-[12px] py-[8px] pr-10"
                   id="state"
+                  onChange={(e) => setSelectedState(e.target.value)}
+                  value={selectedState}
                 >
                   <option value="Select">Select</option>
+                  {availableStates.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
                 </select>
-                <MdKeyboardArrowDown className="absolute top-1/2 right-3 transform -translate-y-1/2 " />
+                <MdKeyboardArrowDown className="absolute top-1/2 right-3 transform -translate-y-1/2 pointer-events-none" />
               </div>
             </div>
           </div>
@@ -123,17 +180,19 @@ const CreateSchool = () => {
               type="web"
               name="web"
               id="web"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
               placeholder="Website"
               className="mt-0.5 block w-full text-sm px-[12px] py-[8px] border border-gray-200 rounded-lg"
             />
           </div>
           <div className="mt-4">
-            <label className="text-sm" htmlFor="file">
+            <label className="text-sm" htmlFor="upload-logo">
               School Logo
             </label>
-            <div className="mt-1 border-1 border-dashed w-[338px] h-[152px] rounded-lg">
-              <div className="flex flex-col items-center justify-center h-full">
-                <div className="flex flex-col justify-center items-center">
+            <label>
+              <div className="mt-1 border-1 border-dashed w-[338px] h-[152px] rounded-lg">
+                <div className="flex flex-col items-center justify-center h-full">
                   <p className="font-bold text-2xl">
                     <AiOutlineCloudUpload />
                   </p>
@@ -144,9 +203,14 @@ const CreateSchool = () => {
                     JPG, PNG, PDF, formats up to 5 MB.
                   </p>
                 </div>
+                <input
+                  type="file"
+                  onChange={(e) => setLogo(e.target.files[0])}
+                  name="upload-image"
+                  className="hidden"
+                />
               </div>
-              <input type="file" name="upload-image" className="w-0 h-0" />
-            </div>
+            </label>
           </div>
           <button
             type="button"

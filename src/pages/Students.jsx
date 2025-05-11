@@ -16,8 +16,9 @@ import "flatpickr/dist/themes/material_blue.css"; // or any theme you like
 import { FaPlus } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 
-import plane_icon from "../assets/icon/plane_icon.png";
+import Loader from "../components/Loader";
 import notification_icon from "../assets/icon/notification_icon.png";
+import { createStudent, fetchStudents } from "../api";
 
 // Simple inline styles for the modal
 const modalStyles = {
@@ -46,13 +47,21 @@ const Students = () => {
   const [date, setDate] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: "", email: "" });
+  const [students, setStudents] = useState([]);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [phonePrefix, setPhonePrefix] = useState("");
+  const [phone, setPhone] = useState("");
+  const [dob, setDob] = useState("");
+  const [degree, setDegree] = useState("");
 
+  const [loading, setLoading] = useState(true);
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
   const handleClick = (id) => {
-    console.log("Student ID:", id);
     navigate(`/students/${id}`);
   };
 
@@ -61,14 +70,30 @@ const Students = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    const data = {
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      phone_prefix: phonePrefix,
+      phone_number: phone,
+      nationality,
+      degree,
+      dob,
+    };
+
+    try {
+      const response = await createStudent(data);
+      setShowSuccess(true);
+    } catch (err) {
+      if (err.response && err.response.status === 406) {
+        alert("A Student with this name already exists.");
+      }
+      console.error("Submission failed", err);
+    }
     setIsModalOpen(false); // Close the modal
     setShowSuccess(true);
-    // You can also send this data to an API here
-
-    // setTimeout(() => setShowSuccess(false), 5000);
   };
 
   useEffect(() => {
@@ -84,9 +109,30 @@ const Students = () => {
         }
       },
     });
+
     return () => {
       fp.destroy(); // Clean up
     };
+  }, []);
+
+  const getStudents = async () => {
+    setLoading(true);
+
+    try {
+      const response = await fetchStudents();
+      if (response?.status === "ok") {
+        console.log(response);
+        setStudents(response.data); // adjust path based on real data
+      }
+    } catch (error) {
+      console.error("failed to fetch courses:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getStudents();
   }, []);
 
   return (
@@ -113,7 +159,7 @@ const Students = () => {
         <button
           type="button"
           onClick={handleOpenModal}
-          className="flex items-center gap-3 text-sm text-white px-5 py-[10px] bg-green-500 rounded-md"
+          className="active:scale-95 transition transform duration-200 ease-in-out flex items-center gap-3 text-sm text-white px-5 py-[10px] bg-green-500 rounded-md"
         >
           <FaPlus className="text-white" />
           Add Student
@@ -138,7 +184,7 @@ const Students = () => {
         </div>
         <button
           type="button"
-          className="text-sm text-white px-12 py-[10px] bg-purple-900 rounded-md"
+          className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-white px-12 py-[10px] bg-purple-900 rounded-md"
         >
           Search
         </button>
@@ -163,29 +209,41 @@ const Students = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr
-              onClick={() => {
-                handleClick(1);
-              }}
-              className="border-b-2 border-gray-200 hover:bg-gray-50 cursor-default"
-            >
-              <td className="p-3 text-sm text-gray-900">
-                <span>Samuel Oboh</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span>2</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span>2</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span>2</span>
-              </td>
-            </tr>
+          <tbody className="relative">
+            {loading ? (
+              <Loader loading={loading} />
+            ) : (
+              <>
+                {students &&
+                  students.map((student, index) => (
+                    <tr
+                      key={index}
+                      onClick={() => {
+                        handleClick(student.user_id);
+                      }}
+                      className="border-b-2 border-gray-200 hover:bg-gray-50 cursor-default"
+                    >
+                      <td className="p-3 text-sm text-gray-900">
+                        <span>
+                          {student.first_name} {student.last_name}
+                        </span>
+                      </td>
+                      <td className="p-3 text-sm text-gray-900">
+                        <span>{student.total_program}</span>
+                      </td>
+                      <td className="p-3 text-sm text-gray-900">
+                        <span>{student.total_active}</span>
+                      </td>
+                      <td className="p-3 text-sm text-gray-900">
+                        <span>{student.total_offer}</span>
+                      </td>
+                    </tr>
+                  ))}
+              </>
+            )}
           </tbody>
         </table>
-        <div class=" absolute bottom-6 right-0 left-0 flex justify-between items-center p-4  text-sm text-gray-600 w-full">
+        <div class="flex justify-between items-center p-4  text-sm text-gray-600 w-full">
           <button class="px-3 py-1 border w-21 border-gray-300 rounded hover:bg-gray-100 text-gray-800">
             Previous
           </button>
@@ -204,26 +262,26 @@ const Students = () => {
               <div className="w-full">
                 <div className="flex gap-3 mt-4 w-full">
                   <div className=" w-full">
-                    <label htmlFor="fname">First Name</label>
+                    <label htmlFor="firstname">First Name</label>
                     <input
                       type="text"
                       name="firstname"
                       id="firstname"
-                      value={formData.email}
-                      onChange={handleChange}
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
                       placeholder="First name"
                       className="mt-0.5 w-full text-sm block px-[12px] py-[8px] border border-gray-200 rounded-lg"
                     />
                   </div>
                   <div className=" w-full">
-                    <label htmlFor="lname">Last Name</label>
+                    <label htmlFor="lastname">Last Name</label>
                     <input
                       type="text"
                       name="lastname"
                       id="lastname"
-                      value={formData.email}
-                      onChange={handleChange}
                       placeholder="Last name"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
                       className="mt-0.5 block w-full px-[12px] py-[8px] border border-gray-200 text-sm rounded-lg"
                     />
                   </div>
@@ -234,51 +292,66 @@ const Students = () => {
                     <div className="relative w-full">
                       <select
                         name="nationality"
-                        value={formData.email}
-                        onChange={handleChange}
                         className="appearance-none border border-gray-300 outline-none w-full rounded-lg text-gray-600 text-sm mt-0.5 block px-[12px] py-[8px] pr-10"
                         id="nationality"
+                        value={nationality}
+                        onChange={(e) => setNationality(e.target.value)}
                       >
                         <option value="Nationality">Nationality</option>
+                        <option value="Nigeria">Nigeria</option>
+                        <option value="Canada">Canada</option>
+                        <option value="USA">USA</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Australia">Australia</option>
                       </select>
                       <MdKeyboardArrowDown className="absolute top-1/2 right-3 transform -translate-y-1/2 " />
                     </div>
                   </div>
-                  <div className=" w-full">
+                  <div className="w-full">
                     <label htmlFor="phone">Phone Number</label>
-                    <input
-                      type="text"
-                      name="phone"
-                      id="phone"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Phone Number"
-                      className="mt-0.5 block w-full text-sm px-[12px] py-[8px] border border-gray-200 rounded-lg"
-                    />
+                    <div className="mt-0.5 flex w-full rounded-lg overflow-hidden border border-gray-200">
+                      <input
+                        type="text"
+                        name="prefix"
+                        id="prefix"
+                        placeholder="234"
+                        value={phonePrefix}
+                        onChange={(e) => setPhonePrefix(e.target.value)}
+                        className="w-16 text-sm px-3 py-[8px] bg-gray-100 border-r border-gray-200 text-center"
+                      />
+                      <input
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        placeholder="8090909090"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        className="flex-1 text-sm px-3 py-[8px] focus:outline-none"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="w-full mt-4">
                   <label htmlFor="email">Email</label>
                   <input
-                    type="text"
-                    name="phone"
-                    id="phone"
-                    value={formData.email}
-                    onChange={handleChange}
+                    type="email"
+                    name="email"
+                    id="email"
                     placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="mt-0.5 block w-full text-sm px-[12px] py-[8px] border border-gray-200 rounded-lg"
                   />
                 </div>
                 <div className="flex gap-3 w-full mt-4">
                   <div className=" w-full">
-                    <label htmlFor="fname">Highest Qualification </label>
+                    <label htmlFor="degree">Highest Qualification </label>
                     <input
                       type="text"
-                      name="firstname"
-                      id="firstname"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="First name"
+                      name="Degree"
+                      id="Degree"
+                      value={degree}
+                      onChange={(e) => setDegree(e.target.value)}
                       className="mt-0.5 block w-full px-[12px] py-[8px] text-sm border border-gray-200 rounded-lg"
                     />
                   </div>
@@ -287,9 +360,9 @@ const Students = () => {
                     <input
                       ref={inputRef}
                       id="date"
-                      value={formData.email}
-                      onChange={handleChange}
                       placeholder="Select"
+                      value={dob}
+                      onChange={(e) => setDob(e.target.value)}
                       className="mt-0.5 block w-full px-[12px] py-[8px] text-sm border border-gray-200 rounded-lg"
                     />
                     <p className="text-xs text-gray-500 mt-1 flex gap-1 items-center">
@@ -304,12 +377,12 @@ const Students = () => {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="text-sm text-gray-500 py-1 px-2 border border-gray-200 rounded-lg"
+                  className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-gray-500 py-1 px-2 border border-gray-200 rounded-lg"
                 >
                   Close
                 </button>
                 <button
-                  className="bg-purple-900 py-1 px-2 rounded-lg text-white text-sm"
+                  className="active:scale-95 transition transform duration-200 ease-in-out bg-purple-900 py-1 px-2 rounded-lg text-white text-sm"
                   type="submit"
                 >
                   Create Student
@@ -320,7 +393,7 @@ const Students = () => {
         </div>
       )}
 
-      {showSuccess && (
+      {/* {showSuccess && (
         <div style={modalStyles.overlay}>
           <div
             style={modalStyles.modal}
@@ -353,7 +426,7 @@ const Students = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

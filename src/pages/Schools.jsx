@@ -5,6 +5,7 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
+import Loader from "../components/Loader";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 import fanshawe_logo from "../assets/logo/fanshawe_logo.png";
@@ -19,6 +20,7 @@ import { CiSearch } from "react-icons/ci";
 
 import plane_icon from "../assets/icon/plane_icon.png";
 import notification_icon from "../assets/icon/notification_icon.png";
+import { fetchApplications, getSchools } from "../api";
 
 // Simple inline styles for the modal
 const modalStyles = {
@@ -44,6 +46,9 @@ const Schools = () => {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const [date, setDate] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [schoolApplicationCounts, setSchoolApplicationCounts] = useState({});
+  const [schools, setSchools] = useState([]);
   const [showSuccess, setShowSuccess] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "" });
@@ -93,6 +98,55 @@ const Schools = () => {
     };
   }, []);
 
+  const fetchSchools = async () => {
+    setLoading(true);
+    try {
+      const response = await getSchools();
+      if (response?.status === "ok") {
+        console.log(response);
+        setSchools(response.data); // adjust path based on real data
+      }
+      setSchools(response.data);
+    } catch (error) {
+      console.error("failed to fetch courses:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSchools();
+  }, []);
+
+  const fetchSchoolsAndApplications = async () => {
+    setLoading(true);
+    try {
+      const schoolsResponse = await getSchools();
+      const appsResponse = await fetchApplications();
+
+      const schools = schoolsResponse.data;
+      const apps = appsResponse.data;
+      const appCounts = {};
+      console.log(apps);
+      console.log(schools);
+      for (const school of schools) {
+        const schoolName = school.school_name;
+
+        const filterApp = apps.filter((app) => app.school_name === schoolName);
+        appCounts[schoolName] = filterApp.length;
+      }
+      setSchoolApplicationCounts(appCounts);
+    } catch (error) {
+      console.log("Failed to fetch schools or appplications", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSchoolsAndApplications();
+  }, []);
+
   return (
     <div className="">
       <div className=" flex justify-between items-center inter bg-white p-4 shadow rounded-md">
@@ -112,12 +166,12 @@ const Schools = () => {
       {/* Header */}
       <div className=" flex  items-center justify-between inter bg-white px-4 py-3 shadow mt-4 rounded-md">
         <div className="flex items-cente">
-          <h5 className="text-black text-xl font-semibold inter"> Students</h5>
+          <h5 className="text-black text-xl font-semibold inter"> Schools</h5>
         </div>
         <button
           type="button"
           onClick={createSchool}
-          className="flex items-center gap-3 text-sm text-white px-5 py-[10px] bg-green-500 rounded-md"
+          className="active:scale-95 transition transform duration-200 ease-in-out flex items-center gap-3 text-sm text-white px-5 py-[10px] bg-green-500 rounded-md"
         >
           <FaPlus className="text-white" />
           Create School
@@ -125,66 +179,80 @@ const Schools = () => {
       </div>
 
       {/* School List */}
-      <div className="relative mt-4 overflow-x-auto bg-white rounded-lg">
-        <table className="table-auto w-full inter  bg-white">
-          <thead className="bg-gray-200 border-gray-200">
-            <tr>
-              <th className="p-3 text-xs font-semibold tracking-wide text-left">
-                School
-              </th>
-              <th className="w-45 p-3 text-xs font-semibold tracking-wide text-left">
-                Courses
-              </th>
-              <th className="w-45 p-3 text-xs font-semibold tracking-wide text-left">
-                Application
-              </th>
-              <th className="w-15 p-3 text-xs font-semibold tracking-wide text-left"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              onClick={() => {
-                handleClick(1);
-              }}
-              className="border-b-2 border-gray-200 hover:bg-gray-50 cursor-default "
-            >
-              <td>
-                <div className="inline-block p-3 align-middle">
-                  <img
-                    src={fanshawe_logo}
-                    className="h-8 w-8 inline-block mr-2"
-                    alt="fanshawe_logo"
-                  />
-                  <div className="inline-block align-middle">
-                    <p className="text-sm">Fanshawe College</p>
-                    <p className="text-xs text-gray-600">Ontario, Canada</p>
-                  </div>
-                </div>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span>34</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span className=" align-middle">34</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <div className="align-middle flex justify-between items-center w-full">
-                  <RiDeleteBinLine />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="flex justify-between items-center p-4  text-sm text-gray-600 w-full">
-          <button class="px-3 py-1 border w-21 border-gray-300 rounded hover:bg-gray-100 text-gray-800">
-            Previous
-          </button>
-          <span className="text-gray-800">Page 1 of 10</span>
-          <button class="px-3 py-1 border w-21 border-gray-300 rounded hover:bg-gray-100 text-gray-800">
-            Next
-          </button>
+      {loading ? (
+        <Loader loading={loading} />
+      ) : (
+        <div className="relative mt-4 overflow-x-auto bg-white rounded-lg">
+          <table className="table-auto w-full inter  bg-white">
+            <thead className="bg-gray-200 border-gray-200">
+              <tr>
+                <th className="w-[44%] p-3 text-xs font-semibold tracking-wide text-left">
+                  School
+                </th>
+                <th className="w-[20%] p-3 text-xs font-semibold tracking-wide text-left">
+                  Courses
+                </th>
+                <th className="w-[20%] p-3 text-xs font-semibold tracking-wide text-left">
+                  Application
+                </th>
+                <th className="w-[15%] p-3 text-xs font-semibold tracking-wide text-left"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {schools &&
+                schools.map((school, index) => (
+                  <tr
+                    key={index}
+                    onClick={() => {
+                      handleClick(school.school_id);
+                    }}
+                    className="border-b-2 border-gray-200 hover:bg-gray-50 cursor-default "
+                  >
+                    <td>
+                      <div className="inline-block p-3 align-middle">
+                        <img
+                          src={school.logo}
+                          className="h-8 w-8 inline-block mr-2"
+                          alt=""
+                        />
+                        <div className="inline-block align-middle">
+                          <p className="text-sm capitalize">
+                            {school.school_name}
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            {school.state}, {school.country}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-3 text-sm text-gray-900">
+                      <span>{school.program_count}</span>
+                    </td>
+                    <td className="p-3 text-sm text-gray-900">
+                      <span className=" align-middle">
+                        {schoolApplicationCounts[school.school_name] ?? 0}
+                      </span>
+                    </td>
+                    <td className="p-3 text-sm text-gray-900">
+                      <div className="align-middle flex justify-between items-center w-full">
+                        <RiDeleteBinLine />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <div class="flex justify-between items-center p-4  text-sm text-gray-600 w-full">
+            <button class="px-3 py-1 border w-21 border-gray-300 rounded hover:bg-gray-100 text-gray-800">
+              Previous
+            </button>
+            <span className="text-gray-800">Page 1 of 10</span>
+            <button class="px-3 py-1 border w-21 border-gray-300 rounded hover:bg-gray-100 text-gray-800">
+              Next
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       {isModalOpen && (
         <div style={modalStyles.overlay}>
@@ -294,12 +362,12 @@ const Schools = () => {
                 <button
                   type="button"
                   onClick={handleCloseModal}
-                  className="text-sm text-gray-500 py-1 px-2 border border-gray-200 rounded-lg"
+                  className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-gray-500 py-1 px-2 border border-gray-200 rounded-lg"
                 >
                   Close
                 </button>
                 <button
-                  className="bg-purple-900 py-1 px-2 rounded-lg text-white text-sm"
+                  className="active:scale-95 transition transform duration-200 ease-in-out bg-purple-900 py-1 px-2 rounded-lg text-white text-sm"
                   type="submit"
                 >
                   Create Student
@@ -329,12 +397,12 @@ const Schools = () => {
               <button
                 type="button"
                 onClick={() => setShowSuccess(false)}
-                className="text-sm text-gray-500 py-1 px-2 border border-gray-200 rounded-lg"
+                className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-gray-500 py-1 px-2 border border-gray-200 rounded-lg"
               >
                 Close
               </button>
               <button
-                className="bg-purple-900 py-1 px-2 rounded-lg text-white text-sm"
+                className="active:scale-95 transition transform duration-200 ease-in-out bg-purple-900 py-1 px-2 rounded-lg text-white text-sm"
                 type="submit"
                 onClick={() => setShowSuccess(false)}
               >

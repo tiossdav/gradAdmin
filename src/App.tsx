@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import PrivateRoute from "./components/PrivateRoute";
 import { Home } from "./pages";
 import Login from "./auth/Login";
 
@@ -9,7 +10,14 @@ const App = () => {
       {/* Page content */}
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/*" element={<Home />} />
+        <Route
+          path="/*"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </Router>
   );

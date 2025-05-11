@@ -121,7 +121,7 @@ const Messages = () => {
           </div>
           <button
             type="button"
-            className="flex items-center text-sm text-white py-[8px] px-[16px] gap-2 bg-purple-800 rounded-md"
+            className="active:scale-95 transition transform duration-200 ease-in-out flex items-center text-sm text-white py-[8px] px-[16px] gap-2 bg-purple-800 rounded-md"
           >
             Search
           </button>
@@ -272,12 +272,12 @@ const Messages = () => {
                 <button
                   type="button"
                   onClick={() => setCreateRequirement(false)}
-                  className="text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
+                  className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
                 >
                   Close
                 </button>
                 <button
-                  className="bg-purple-900 p-2 rounded-lg text-white text-sm"
+                  className="active:scale-95 transition transform duration-200 ease-in-out bg-purple-900 p-2 rounded-lg text-white text-sm"
                   type="submit"
                 >
                   Create User
@@ -322,12 +322,12 @@ const Messages = () => {
                 <button
                   type="button"
                   onClick={() => setUpdateRequirement(false)}
-                  className="text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
+                  className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
                 >
                   Close
                 </button>
                 <button
-                  className="bg-purple-900 p-2 rounded-lg text-white text-sm"
+                  className="active:scale-95 transition transform duration-200 ease-in-out bg-purple-900 p-2 rounded-lg text-white text-sm"
                   type="submit"
                 >
                   Create User
@@ -356,12 +356,12 @@ const Messages = () => {
                 <button
                   type="button"
                   onClick={() => setDeleteRequirement(false)}
-                  className="text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
+                  className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
                 >
                   Close
                 </button>
                 <button
-                  className="bg-purple-900 p-2 rounded-lg text-white text-sm"
+                  className="active:scale-95 transition transform duration-200 ease-in-out bg-purple-900 p-2 rounded-lg text-white text-sm"
                   type="submit"
                   onClick={() => setDeleteRequirement(false)}
                 >

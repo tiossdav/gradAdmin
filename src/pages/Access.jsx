@@ -118,7 +118,7 @@ const Access = () => {
         <button
           type="button"
           onClick={handleCreateUser}
-          className="flex items-center gap-3 text-sm text-white px-5 py-[10px] bg-green-500 rounded-md"
+          className="flex items-center gap-3 text-sm text-white px-5 py-[10px] bg-green-500 rounded-md active:scale-95 transition transform duration-200 ease-in-out"
         >
           <FaPlus className="text-white" />
           Create User
@@ -412,12 +412,12 @@ const Access = () => {
                 <button
                   type="button"
                   onClick={() => setCreateUser(false)}
-                  className="text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
+                  className="text-sm text-gray-500 p-2 border border-gray-200 rounded-lg active:scale-95 transition transform duration-200 ease-in-out"
                 >
                   Close
                 </button>
                 <button
-                  className="bg-purple-900 p-2 rounded-lg text-white text-sm"
+                  className="bg-purple-900 p-2 rounded-lg text-white text-sm active:scale-95 transition transform duration-200 ease-in-out"
                   type="submit"
                 >
                   Create User
@@ -558,12 +558,12 @@ const Access = () => {
                 <button
                   type="button"
                   onClick={() => setUpdateAccess(false)}
-                  className="text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
+                  className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-gray-500 p-2 border border-gray-200 rounded-lg"
                 >
                   Close
                 </button>
                 <button
-                  className="bg-purple-900 p-2 rounded-lg text-white text-sm"
+                  className="active:scale-95 transition transform duration-200 ease-in-out bg-purple-900 p-2 rounded-lg text-white text-sm"
                   type="submit"
                 >
                   Update
@@ -593,12 +593,12 @@ const Access = () => {
                 <button
                   type="button"
                   onClick={() => setDeleteAccess(false)}
-                  className="text-sm text-gray-500 py-1 px-2 border border-gray-200 rounded-lg"
+                  className="active:scale-95 transition transform duration-200 ease-in-out text-sm text-gray-500 py-1 px-2 border border-gray-200 rounded-lg"
                 >
                   Close
                 </button>
                 <button
-                  className="bg-purple-900 py-1 px-2 rounded-lg text-white text-sm"
+                  className="active:scale-95 transition transform duration-200 ease-in-out bg-purple-900 py-1 px-2 rounded-lg text-white text-sm"
                   type="submit"
                   onClick={() => setDeleteAccess(false)}
                 >

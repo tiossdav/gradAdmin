@@ -1,8 +1,9 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import { Link, NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
+import { FiLogOut } from "react-icons/fi";
 
 import {
   Dashboard,
@@ -18,7 +19,7 @@ import {
   Settings,
   Agents,
   AgentDetails,
-  StudentCourse,
+  ApplicationDetails,
   CourseDetails,
 } from "../pages";
 import { links } from "../data/dummy";
@@ -30,10 +31,36 @@ const activeLink =
 const normalLink = "flex items-center text-[14px] inter p-2 pl-5 gap-3 w-full";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  const handleLogout = async () => {
+    setLoading(true);
+
+    try {
+      // Optionally, you can send a request to invalidate the session if your backend supports it.
+      // await logoutAdmin(); // <-- Uncomment if you have an API endpoint for logout
+
+      // Clear local storage data
+      localStorage.removeItem("user_data");
+      localStorage.removeItem("authToken");
+
+      // Optional: Display a toast or message for user feedback
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      // Add a graceful delay for user experience
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/login");
+      }, 1500); // 1.5 seconds for smooth transition
+    }
+  };
+
   return (
     <div className="bg-gray-50 h-screen">
       <div className="grid grid-cols-[11rem_1fr] p-2 gap-2 h-screen overflow-hidden">
-        <div className="bg-white flex flex-col gap-5">
+        <div className="relative bg-white flex flex-col gap-5">
           <div className="flex justify-center items-center ">
             <Link
               to="/"
@@ -69,6 +96,15 @@ const Home = () => {
                   </span>
                 </NavLink>
               ))}
+              <div className="absolute bottom-3 left-0 right-0 inter text-sm pl-5">
+                <NavLink
+                  to="/login"
+                  onClick={handleLogout}
+                  className="active:scale-95 transition transform duration-200 ease-in-out flex items-center gap-3"
+                >
+                  <FiLogOut /> Logout
+                </NavLink>
+              </div>
             </div>
           </div>
         </div>
@@ -76,6 +112,7 @@ const Home = () => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/:id" element={<ApplicationDetails />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/students" element={<Students />} />
             <Route path="/students/:id" element={<StudentDetails />} />
@@ -93,7 +130,6 @@ const Home = () => {
             <Route path="/agents/:id" element={<AgentDetails />} />
             <Route path="/access" element={<Access />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/course" element={<StudentCourse />} />
           </Routes>
         </div>
       </div>

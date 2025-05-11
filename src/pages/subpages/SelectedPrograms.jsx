@@ -7,10 +7,12 @@ import { IoIosCheckmark } from "react-icons/io";
 
 import fanshawe_logo from "../../assets/logo/fanshawe_logo.png";
 
-const SelectedPrograms = () => {
+const SelectedPrograms = ({ applications, student }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => setIsModalOpen(true);
 
+  console.log(applications);
+  console.log(student);
   return (
     <div>
       <div className="flex items-center gap-3 mt-4 w-full">
@@ -45,148 +47,112 @@ const SelectedPrograms = () => {
           <MdKeyboardArrowDown className="absolute top-1/2 -translate-y-1/2 right-3" />
         </div>
       </div>
-
-      <div className="relative mt-4 overflow-x-auto bg-white h-123 rounded-lg">
-        <table className="table-auto w-full inter  bg-white">
-          <thead className="bg-gray-200 border-gray-200">
-            <tr>
-              <th className="p-3 text-xs font-semibold tracking-wide text-left">
-                Course
-              </th>
-              <th className="w-40 p-3 text-xs font-semibold tracking-wide text-left">
-                Intake
-              </th>
-              <th className="w-40 p-3 text-xs font-semibold tracking-wide text-left">
-                Duration
-              </th>
-              <th className="w-50 p-3 text-xs font-semibold tracking-wide text-left">
-                Application Fee
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="border-b-2 border-gray-200 hover:bg-gray-50 cursor-default">
-              <td className="p-3 text-sm whitespace-nowrap text-gray-900">
-                <div className="inline-block align-middle">
-                  <img
-                    src={fanshawe_logo}
-                    className="h-8 w-8 inline-block mr-2"
-                    alt="fanshawe_logo"
-                  />
-                  <div className="inline-block align-middle">
-                    <p className="text-sm">
-                      Bachelor of Business Administration (BBA)
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      Bachelor; Co-op; Honours
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span>September 2024</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span>4 Year(s)</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <div>
-                  <div className="inline-block align-middle">
-                    <div className="relative inline-block h-[14px] w-[14px] align-middle pr-2">
-                      <input
-                        type="checkbox"
-                        className="appearance-none peer h-[14px] w-[14px] border-1 rounded-sm border-purple-500 text-purple-500"
-                        name="paid"
-                        id="paid"
+      {applications.length === 0 ? (
+        <div className="flex justify-center items-center h-[300px]">
+          <p>You have not selected a program.</p>
+        </div>
+      ) : (
+        <div className="relative mt-4 overflow-x-auto bg-white h-123 rounded-lg">
+          <table className="table-auto w-full inter  bg-white">
+            <thead className="bg-gray-200 border-gray-200">
+              <tr>
+                <th className="p-3 text-xs font-semibold tracking-wide text-left">
+                  Course
+                </th>
+                <th className="w-40 p-3 text-xs font-semibold tracking-wide text-left">
+                  Intake
+                </th>
+                <th className="w-40 p-3 text-xs font-semibold tracking-wide text-left">
+                  Duration
+                </th>
+                <th className="w-50 p-3 text-xs font-semibold tracking-wide text-left">
+                  Application Fee
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {applications.map((app, index) => (
+                <tr
+                  key={index}
+                  className="border-b-2 border-gray-200 hover:bg-gray-50 cursor-default"
+                >
+                  <td className="p-3 text-sm whitespace-nowrap text-gray-900">
+                    <div className="inline-block align-middle">
+                      <img
+                        src={app.school_data?.logo}
+                        className="h-8 w-8 inline-block mr-2"
+                        alt=""
                       />
-                      <IoIosCheckmark className="text-xl text-purple-500 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2  opacity-0 peer-checked:opacity-100 pointer-events-none" />
+                      <div className="inline-block align-middle">
+                        <p className="text-sm">
+                          {app?.course_data?.title || "yes"}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          {app?.program_name}
+                        </p>
+                      </div>
                     </div>
-                    <span className="ml-2 align-middle">N150,000</span>
-                  </div>
-                  <div className="inline-block align-middle float-right">
-                    <RiDeleteBinLine
-                      size={18}
-                      onClick={handleOpenModal}
-                      className="inline-block align-middle"
-                    />
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <tr className="border-b-2 border-gray-200 hover:bg-gray-50 cursor-default">
-              <td className="p-3 text-sm whitespace-nowrap text-gray-900">
-                <div className="inline-block align-middle">
-                  <img
-                    src={fanshawe_logo}
-                    className="h-8 w-8 inline-block mr-2"
-                    alt="fanshawe_logo"
-                  />
-                  <div className="inline-block align-middle">
-                    <p className="text-sm">
-                      Bachelor of Business Administration (BBA)
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      Bachelor; Co-op; Honours
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span>September 2024</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <span>4 Year(s)</span>
-              </td>
-              <td className="p-3 text-sm text-gray-900">
-                <div>
-                  <div className="inline-block align-middle">
-                    <div className="relative inline-block h-[14px] w-[14px] align-middle pr-2">
-                      <input
-                        type="checkbox"
-                        className="appearance-none peer h-[14px] w-[14px] border-1 rounded-sm border-purple-500 text-purple-500"
-                        name="paid"
-                        id="paid"
-                      />
-                      <IoIosCheckmark className="text-xl text-purple-500 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2  opacity-0 peer-checked:opacity-100 pointer-events-none" />
+                  </td>
+                  <td className="p-3 text-sm text-gray-900">
+                    <span>{app.intake_year}</span>
+                  </td>
+                  <td className="p-3 text-sm text-gray-900">
+                    <span>{app.course_data.duration_year} Year(s)</span>
+                  </td>
+                  <td className="p-3 text-sm text-gray-900">
+                    <div>
+                      <div className="inline-block align-middle">
+                        <div className="relative inline-block h-[14px] w-[14px] align-middle pr-2">
+                          <input
+                            type="checkbox"
+                            className="appearance-none peer h-[14px] w-[14px] border-1 rounded-sm border-purple-500 text-purple-500"
+                            name="paid"
+                            id="paid"
+                          />
+                          <IoIosCheckmark className="text-xl text-purple-500 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2  opacity-0 peer-checked:opacity-100 pointer-events-none" />
+                        </div>
+                        <span className="ml-2 align-middle">
+                          {app.course_data.app_fee}
+                        </span>
+                      </div>
+                      <div className="inline-block align-middle float-right">
+                        <RiDeleteBinLine
+                          size={18}
+                          onClick={handleOpenModal}
+                          className="inline-block align-middle"
+                        />
+                      </div>
                     </div>
-                    <span className="ml-2 align-middle">N150,000</span>
-                  </div>
-                  <div className="inline-block align-middle float-right">
-                    <RiDeleteBinLine
-                      size={18}
-                      onClick={handleOpenModal}
-                      className="inline-block align-middle"
-                    />
-                  </div>
-                </div>
-              </td>
-            </tr>
+                  </td>
+                </tr>
+              ))}
 
-            <tr>
-              <td></td>
-              <td></td>
-              <td colSpan="2" className="relative text-sm text-gray-900">
-                <div className="pt-4 pb-4 float-right">
-                  <div className="">
-                    <p className="font-semibold text-xs inline-block pr-6">
-                      Selected: 2
-                    </p>
-                    <p className="font-semibold text-xs inline-block">
-                      Cost: N300, 000
-                    </p>
+              <tr>
+                <td></td>
+                <td></td>
+                <td colSpan="2" className="relative text-sm text-gray-900">
+                  <div className="pt-4 pb-4 float-right">
+                    <div className="">
+                      <p className="font-semibold text-xs inline-block pr-6">
+                        Selected: 2
+                      </p>
+                      <p className="font-semibold text-xs inline-block">
+                        Cost: N300, 000
+                      </p>
+                    </div>
+                    <button
+                      className="text-sm float-right text-white bg-purple-800 py-2 px-2 mt-4 rounded-md"
+                      type="button"
+                    >
+                      Proceed to payment
+                    </button>
                   </div>
-                  <button
-                    className="text-sm float-right text-white bg-purple-800 py-2 px-2 mt-4 rounded-md"
-                    type="button"
-                  >
-                    Proceed to payment
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
       {isModalOpen && (
         <div style={modalStyles.overlay}>
           <div

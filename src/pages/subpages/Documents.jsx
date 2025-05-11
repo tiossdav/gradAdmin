@@ -10,7 +10,7 @@ import { IoIosCheckmark } from "react-icons/io";
 
 import fanshawe_logo from "../../assets/logo/fanshawe_logo.png";
 
-const Documents = () => {
+const Documents = ({ applications, student }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => setIsModalOpen(true);
 
@@ -32,6 +32,8 @@ const Documents = () => {
       borderRadius: "8px",
     },
   };
+
+  console.log(applications);
 
   return (
     <div>

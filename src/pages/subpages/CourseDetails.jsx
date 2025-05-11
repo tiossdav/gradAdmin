@@ -188,21 +188,21 @@ const CourseDetails = () => {
                   style={{ backgroundColor: "#F4EBFF", color: "#582B8D" }}
                   className="flex items-center gap-2 py-2 px-5 rounded-3xl"
                 >
-                  <CgNotes />{" "}
+                  <CgNotes />
                   <p className="text-sm text-black">O. Level Certificate</p>
                 </div>
                 <div
                   style={{ backgroundColor: "#F4EBFF", color: "#582B8D" }}
                   className="flex items-center gap-2 py-2 px-5 rounded-3xl"
                 >
-                  <CgNotes />{" "}
+                  <CgNotes />
                   <p className="text-sm text-black">International Passport</p>
                 </div>
                 <div
                   style={{ backgroundColor: "#F4EBFF", color: "#582B8D" }}
                   className="flex items-center gap-2 py-2 px-5 rounded-3xl"
                 >
-                  <CgNotes />{" "}
+                  <CgNotes />
                   <p className="text-sm text-black">High School Certificate</p>
                 </div>
                 <div

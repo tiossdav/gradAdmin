@@ -1,32 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getAppFeeds } from "../../api";
+import Loader from "../../components/Loader";
+const AppFeeds = ({ app, msg }) => {
+  const { user_id } = app;
+  const [loading, setLoading] = useState(false);
+  const [feeds, setFeeds] = useState([]);
 
-const AppFeeds = () => {
+  useEffect(() => {
+    setLoading(true);
+    const getFeeds = async () => {
+      setLoading(true);
+      try {
+        const data = await getAppFeeds(user_id);
+        setFeeds(data.data);
+      } catch (error) {
+        if (error.message.includes("Unauthorized")) {
+          navigate("/login");
+        } else {
+          setError("Error fetching application details");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    getFeeds();
+  }, [msg]);
+
   return (
     <>
       <div className="flex flex-col gap-3 mt-3">
-        <div
-          style={{ backgroundColor: "#F4F4F5" }}
-          className="message1 px-4 py-2 flex flex-col gap-2"
-        >
-          <p className="text-[14px] font-semibold">Adams John</p>
-          <p className="text-[12px] ">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero a
-            enim praesentium libero? Suscipit molestias atque maiores maxime
-          </p>
-        </div>
-        <div
-          style={{ backgroundColor: "#F1E6FF" }}
-          className="message1 px-4 py-2 flex flex-col gap-2"
-        >
-          <p className="text-[14px] font-semibold">Adams John</p>
-          <p className="text-[12px] ">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero a
-            enim praesentium libero? Suscipit molestias atque maiores maxime
-          </p>
-        </div>
+        {loading ? (
+          <Loader loading={loading} />
+        ) : (
+          <>
+            {feeds &&
+              feeds.map((feed, index) => (
+                <div
+                  key={index}
+                  style={{
+                    backgroundColor: index % 2 === 0 ? "#F4F4F5" : "#F1E6FF",
+                  }}
+                  className="message1 px-4 py-2 flex flex-col gap-2"
+                >
+                  <p className="text-[14px] font-semibold capitalize">
+                    {feed.sender}
+                  </p>
+                  <p className="text-[12px] capitalize">{feed.body}</p>
+                </div>
+              ))}
+          </>
+        )}
       </div>
 
-      {openUpdate && (
+      {/* {openUpdate && (
         <div style={modalStyles.overlay}>
           <div
             style={modalStyles.modal}
@@ -76,7 +102,7 @@ const AppFeeds = () => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };
